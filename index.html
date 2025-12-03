@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Calculator</title>
+    <script src="script.js" defer></script>
 </head>
 <body>
 <div class="calc">
@@ -10,28 +11,33 @@
     <div class="screen"></div>
     <div class="button-wrapper">
         <ul class="buttons">
-            <li class="button">0</li>
-            <li class="button">1</li>
-            <li class="button">2</li>
-            <li class="button">3</li>
-            <li class="button">4</li>
-            <li class="button">5</li>
-            <li class="button">6</li>
-            <li class="button">7</li>
-            <li class="button">8</li>
-            <li class="button">9</li>
-            <li class="button">.</li>
+            <li class="num"> <button class="numkey">1</button> </li>
+            <li class="num"> <button class="numkey">2</button> </li>
+            <li class="num"> <button class="numkey">0</button> </li>
+            <li class="num"> <button class="numkey">3</button> </li>
+            <li class="num"> <button class="numkey">4</button> </li>
+            <li class="num"> <button class="numkey">5</button> </li>
+            <li class="num"> <button class="numkey">6</button> </li>
+            <li class="num"> <button class="numkey">7</button> </li>
+            <li class="num"> <button class="numkey">8</button> </li>
+            <li class="num"> <button class="numkey">9</button> </li>
+            <li class="num"> <button class="numkey">.</button> </li>
         </ul>
         <div class="operators">
-            <div id="clear">C</div>
-            <div id="add">+</div>
-            <div id="subtract">-</div>
-            <div id="multiply">x</div>
-            <div id="divide">÷</div>
-            <div id="equals">=</div>
+            <button id="clear">C</button>
+            <button id="add">+</button>
+            <button id="subtract">-</button>
+            <button id="multiply">x</button>
+            <button id="divide">÷</button>
+            <button id="exponent">x<sup>y</sup></button> <!-- return "^" -->
+            <button id="equals">=</button>
         </div>
     </div>
 </div>
-<div class="log"></div>
+<div class="log">
+    <button id="clear-log">Clear</button>
+    <div class="entry"></div>
+    <button id="add-to"></button>
+</div>
 </body>
 </html>
