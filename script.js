@@ -17,13 +17,6 @@ const divide = function (a, b) {
 const power = function (a, b) {
     return a ** b
 }
-// const sum = function (array) {
-//     return array.reduce((total, current) => total + current, 0)
-// }
-
-// const multiply = function (array) {
-//     return array.reduce((total, current) => total * current)
-// }
 
 function operate(a, operator, b) {
     switch (operator) {
