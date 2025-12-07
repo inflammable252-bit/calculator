@@ -1,5 +1,5 @@
 const add = function (a, b) {
-    return a + b;
+    return parseFloat(a) + parseFloat(b)
 };
 const subtract = function (a, b) {
     return a - b;
@@ -18,13 +18,10 @@ const power = function (a, b) {
     return a ** b
 }
 
-function operate(string, operator) {
-    let operatorIndex = string.indexOf(operator)
-    a = string.slice(0, operatorIndex)
-    b = string.slice(operatorIndex)
+function operate(operator) {
     switch (operator) {
         case "+":
-            screenText = add(a,b)
+            return (add(a,b))
         case "-":
             return subtract(a,b)
         case "x":
@@ -36,35 +33,72 @@ function operate(string, operator) {
     }
 }
 
+let typeMode = "left"
+
 let screen = document.querySelector(".screen")
-let screenText = ""
+let screenToDisplay = screen.textContent
+
 let keys = document.querySelectorAll(".numkey")
-let float = document.querySelector("#float")
 
 let operators = document.querySelectorAll("#op")
-let util = document.querySelectorAll("#util")
 
-function updateScreen(key) {
-    screenText += key.textContent
-    screen.textContent = screenText
+let float = document.querySelector("#float")
+let util = document.querySelectorAll("#util")
+let op = document.querySelectorAll("#op")
+
+let operatorString = "+-x=-÷"
+
+let a = ""
+let b = ""
+let operator = ""
+
+function updateScreen() {
+    screenToDisplay = `${a}${operator}${b}`
+    screen.textContent = screenToDisplay
 }
 
 function clearScreen() {
-    screenText = ""
-    screen.textContent = ""
+    a = ""
+    b = ""
+    updateScreen()
+}
+
+function typeToScreen(key) {
+    if (!(key.textContent).includes(operatorString)) {
+        operator = key.textContent
+    }
+    if (typeMode == "left") {
+    a += key.textContent
+    }
+    if (typeMode == "right") {
+    b += key.textContent
+    }
+updateScreen()
 }
 
 keys.forEach((key) => {
     key.addEventListener("click", () => {
-        updateScreen(key)
-
-    })
+        typeToScreen(key)
+        })
 })
-// if ((screenText.charAt(screenText.length - 1 == ".") && (key == float))) {return}
 
-operators.forEach((key) => {
+op.forEach((key) => {
     key.addEventListener("click", () => {
-        updateScreen(key)
+        if (typeMode == "left") {
+            typeMode = "right"
+        }
+        else {
+            typeMode = "left"
+        }
+        if (screenToDisplay.includes(operatorString)) {
+            result = operate(a,b)
+            a = result
+            b = ""
+            updateScreen()
+        }
+        else {
+            typeToScreen()
+        }
 
     })
 })
@@ -75,8 +109,13 @@ util.forEach((key) => {
             case "C":
                 clearScreen()
             case "DEL":
-                screenText = screenText.slice(0, (screenText.length - 1))
-                screen.textContent = screenText
-        }
+                if (typeMode  = "left") {
+                a = a.slice(0, (a.length - 1))
+                }
+                else {
+                b = b.slice(0, (b.length - 1))
+                }
+            }
+        updateScreen()
     })
 })
