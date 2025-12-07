@@ -32,9 +32,6 @@ function operate(operator) {
            return power(a,b)
     }
 }
-
-let typeMode = "left"
-
 let screen = document.querySelector(".screen")
 let screenToDisplay = screen.textContent
 
@@ -45,8 +42,6 @@ let operators = document.querySelectorAll("#op")
 let float = document.querySelector("#float")
 let util = document.querySelectorAll("#util")
 let op = document.querySelectorAll("#op")
-
-let operatorString = "+-x=-÷"
 
 let a = ""
 let b = ""
@@ -60,18 +55,15 @@ function updateScreen() {
 function clearScreen() {
     a = ""
     b = ""
-    updateScreen()
+    operator = ""
 }
 
-function typeToScreen(key) {
-    if (!(key.textContent).includes(operatorString)) {
-        operator = key.textContent
+function typeToScreen(item) {
+    if (operator == "") {
+    a += item.textContent
     }
-    if (typeMode == "left") {
-    a += key.textContent
-    }
-    if (typeMode == "right") {
-    b += key.textContent
+    else if (operator != "") {
+    b += item.textContent
     }
 updateScreen()
 }
@@ -84,22 +76,15 @@ keys.forEach((key) => {
 
 op.forEach((key) => {
     key.addEventListener("click", () => {
-        if (typeMode == "left") {
-            typeMode = "right"
-        }
-        else {
-            typeMode = "left"
-        }
-        if (screenToDisplay.includes(operatorString)) {
-            result = operate(a,b)
-            a = result
+        if (operator !== "" && b !== "") {
+            a = operate(operator)
             b = ""
-            updateScreen()
+            operator = key.textContent
         }
-        else {
-            typeToScreen()
+            else {
+            operator = key.textContent
         }
-
+        updateScreen()
     })
 })
 
@@ -109,13 +94,23 @@ util.forEach((key) => {
             case "C":
                 clearScreen()
             case "DEL":
-                if (typeMode  = "left") {
+                if (operator == "" && b == "") {
                 a = a.slice(0, (a.length - 1))
                 }
-                else {
+                else if (b == "" && operator !== "") {
+                    operator = ""
+                }
+                else if (operator != "") {
                 b = b.slice(0, (b.length - 1))
+                }
+            case "=":
+                if (a !== "" && operator !== "" && b !== "") {
+                    operate(operator)
                 }
             }
         updateScreen()
     })
 })
+
+
+
