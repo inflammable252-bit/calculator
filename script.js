@@ -105,7 +105,9 @@ util.forEach((key) => {
                 }
             case "=":
                 if (a !== "" && operator !== "" && b !== "") {
-                    operate(operator)
+                    a = operate(operator)
+                    b = ""
+                    operator = ""
                 }
             }
         updateScreen()
