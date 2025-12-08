@@ -33,7 +33,8 @@ function operate(operator) {
     }
 }
 let screen = document.querySelector(".screen")
-let screenToDisplay = screen.textContent
+let display = document.querySelector("p.display")
+let screenToDisplay = display.textContent
 
 let keys = document.querySelectorAll(".numkey")
 
@@ -42,6 +43,7 @@ let operators = document.querySelectorAll("#op")
 let float = document.querySelector("#float")
 let util = document.querySelectorAll("#util")
 let op = document.querySelectorAll("#op")
+let minusKey = document.querySelector("#negative")
 
 let a = ""
 let b = ""
@@ -49,7 +51,7 @@ let operator = ""
 
 function updateScreen() {
     screenToDisplay = `${a}${operator}${b}`
-    screen.textContent = screenToDisplay
+    display.textContent = screenToDisplay
 }
 
 function clearScreen() {
@@ -114,5 +116,12 @@ util.forEach((key) => {
     })
 })
 
-
-
+minusKey.addEventListener("click", () => {
+    if (operator == "") {
+    a = -a
+    }
+    else if (operator != "") {
+    b = -b
+    }
+updateScreen()    
+})

@@ -43,10 +43,17 @@ div#solar-panel {
 
 div.screen {
     width: 290px;
-    height: 50px;
+    height: 30px;
+    padding: 5px 10px 0px;
     border-radius: 4px;
     border: 2px, solid, darkslateblue;
     background-color: slateblue;
+    font-size: 24px;
+    
+}
+
+p.display {
+    display: inline;
 }
 
 div.button-wrapper {
