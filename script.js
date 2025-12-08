@@ -10,7 +10,7 @@ const multiply = function (a, b) {
 }
 
 const divide = function (a, b) {
-    if (b==0) return "💥💥💥" + "ERROR" + "💥💥💥"
+    if (b===0) return "💥💥💥" + "ERROR" + "💥💥💥"
     else return a / b
 }
 
@@ -61,7 +61,7 @@ function clearScreen() {
 }
 
 function typeToScreen(item) {
-    if (operator == "") {
+    if (operator === "") {
     a += item.textContent
     }
     else if (operator != "") {
@@ -79,7 +79,7 @@ keys.forEach((key) => {
 op.forEach((key) => {
     key.addEventListener("click", () => {
         if (operator !== "" && b !== "") {
-            a = operate(operator)
+            a = (operate(operator)) + ""
             b = ""
             operator = key.textContent
         }
@@ -95,29 +95,34 @@ util.forEach((key) => {
         switch (key.textContent) {
             case "C":
                 clearScreen()
+                break;
             case "DEL":
-                if (operator == "" && b == "") {
+                if (operator === "" && b === "") {
+                aString = a.toString();
+                a = aString;    
                 a = a.slice(0, (a.length - 1))
                 }
-                else if (b == "" && operator !== "") {
+                else if (b === "" && operator !== "") {
                     operator = ""
                 }
-                else if (operator != "") {
+                else if (operator !== "") {
                 b = b.slice(0, (b.length - 1))
                 }
+                break;
             case "=":
                 if (a !== "" && operator !== "" && b !== "") {
                     a = operate(operator)
                     b = ""
                     operator = ""
                 }
+                break;
             }
         updateScreen()
     })
 })
 
 minusKey.addEventListener("click", () => {
-    if (operator == "") {
+    if (operator === "") {
     a = -a
     }
     else if (operator != "") {
