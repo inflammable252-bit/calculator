@@ -10,7 +10,7 @@ const multiply = function (a, b) {
 }
 
 const divide = function (a, b) {
-    if (b===0) return "💥💥💥" + "ERROR" + "💥💥💥"
+    if (b==0) return "💥💥💥" + "ERROR" + "💥💥💥"
     else return a / b
 }
 
@@ -32,15 +32,10 @@ function operate(operator) {
            return power(a,b)
     }
 }
-let screen = document.querySelector(".screen")
 let display = document.querySelector("p.display")
 let screenToDisplay = display.textContent
 
 let keys = document.querySelectorAll(".numkey")
-
-let operators = document.querySelectorAll("#op")
-
-let float = document.querySelector("#float")
 let util = document.querySelectorAll("#util")
 let op = document.querySelectorAll("#op")
 let minusKey = document.querySelector("#negative")
@@ -79,11 +74,14 @@ keys.forEach((key) => {
 op.forEach((key) => {
     key.addEventListener("click", () => {
         if (operator !== "" && b !== "") {
-            a = (operate(operator)) + ""
+            a = operate(operator)
             b = ""
             operator = key.textContent
         }
-            else {
+        else if (key.textContent === "xy") {
+            operator = "^";
+        }
+        else if (a!== "") {
             operator = key.textContent
         }
         updateScreen()
