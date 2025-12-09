@@ -10,7 +10,9 @@ const multiply = function (a, b) {
 }
 
 const divide = function (a, b) {
-    if (b==0) return "💥💥💥" + "ERROR" + "💥💥💥"
+    if (b==0) {
+        return "💥💥💥" + "ERROR" + "💥💥💥"
+    }
     else return a / b
 }
 
@@ -76,6 +78,10 @@ op.forEach((key) => {
         if (operator !== "" && b !== "") {
             a = operate(operator)
             b = ""
+            if (key.textContent === "xy") {
+                operator = "^"
+            }
+            else 
             operator = key.textContent
         }
         else if (key.textContent === "xy") {
@@ -120,10 +126,10 @@ util.forEach((key) => {
 })
 
 minusKey.addEventListener("click", () => {
-    if (operator === "") {
+    if (operator === "" && a>0) {
     a = -a
     }
-    else if (operator != "") {
+    else if (operator != "" && b>0) {
     b = -b
     }
 updateScreen()    
