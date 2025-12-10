@@ -1,3 +1,9 @@
+let a = ""
+let b = ""
+let operator = ""
+let aIsResult = false
+let errorMsg = "💥💥💥" + "ERROR" + "💥💥💥"
+
 const add = function (a, b) {
     return parseFloat(a) + parseFloat(b)
 };
@@ -11,7 +17,7 @@ const multiply = function (a, b) {
 
 const divide = function (a, b) {
     if (b==0) {
-        return "💥💥💥" + "ERROR" + "💥💥💥"
+        return errorMsg;
     }
     else return a / b
 }
@@ -21,6 +27,7 @@ const power = function (a, b) {
 }
 
 function operate(operator) {
+    aIsResult = true
     switch (operator) {
         case "+":
             return (add(a,b))
@@ -42,22 +49,23 @@ let util = document.querySelectorAll("#util")
 let op = document.querySelectorAll("#op")
 let minusKey = document.querySelector("#negative")
 
-let a = ""
-let b = ""
-let operator = ""
-
 function updateScreen() {
     screenToDisplay = `${a}${operator}${b}`
     display.textContent = screenToDisplay
+}
+
+function truncate() {
+
 }
 
 function clearScreen() {
     a = ""
     b = ""
     operator = ""
+    aIsResult = false
 }
 
-function typeToScreen(item) {
+function numkeyToScreen(item) {
     if (operator === "") {
     a += item.textContent
     }
@@ -69,8 +77,12 @@ updateScreen()
 
 keys.forEach((key) => {
     key.addEventListener("click", () => {
-        typeToScreen(key)
-        })
+        if (aIsResult == true && operator == "") {
+            clearScreen()
+        }
+    numkeyToScreen(key)
+    aIsResult = false
+    })
 })
 
 op.forEach((key) => {
@@ -84,10 +96,10 @@ op.forEach((key) => {
             else 
             operator = key.textContent
         }
-        else if (key.textContent === "xy") {
+        else if (key.textContent === "xy" && a != errorMsg) {
             operator = "^";
         }
-        else if (a!== "") {
+        else if (a != "" && a != errorMsg) {
             operator = key.textContent
         }
         updateScreen()
@@ -101,6 +113,9 @@ util.forEach((key) => {
                 clearScreen()
                 break;
             case "DEL":
+                if (a == errorMsg) {
+                    break;
+                }
                 if (operator === "" && b === "") {
                 aString = a.toString();
                 a = aString;    
@@ -110,6 +125,8 @@ util.forEach((key) => {
                     operator = ""
                 }
                 else if (operator !== "") {
+                bString = b.toString();
+                b = bString;
                 b = b.slice(0, (b.length - 1))
                 }
                 break;
@@ -126,11 +143,12 @@ util.forEach((key) => {
 })
 
 minusKey.addEventListener("click", () => {
-    if (operator === "" && a>0) {
+    if (operator === "" && a != "" && a != errorMsg) {
     a = -a
     }
-    else if (operator != "" && b>0) {
+    if (operator != "" && b != "") {
     b = -b
     }
 updateScreen()    
 })
+
