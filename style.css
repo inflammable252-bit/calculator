@@ -6,10 +6,20 @@ body {
     display: flex;
     flex-wrap: wrap;
     flex: 0;
-    max-width: 100vh; 
-    /* flex-direction: column; */
-    /* justify-content: center; */
-    align-items: center;
+    flex-direction: column;
+    justify-content: left;
+}
+
+#bindings {
+    margin: 15px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+.main {
+    width: 100dvw;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 div.calc {

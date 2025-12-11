@@ -37,6 +37,8 @@ function operate(operator) {
             return multiply(a,b)
         case "÷":
             return divide(a,b)
+        case "/":
+            return divide(a,b)
         case "^":
            return power(a,b)
     }
@@ -48,6 +50,8 @@ let keys = document.querySelectorAll(".numkey")
 let util = document.querySelectorAll("#util")
 let op = document.querySelectorAll("#op")
 let minusKey = document.querySelector("#negative")
+
+//Input helpers
 
 function updateScreen() {
     screenToDisplay = `${a}${operator}${b}`
@@ -65,53 +69,49 @@ function clearScreen() {
     aIsResult = false
 }
 
+function enterInput(key) {
+    if (aIsResult == true && operator == "") {
+        clearScreen()
+    }
+numkeyToScreen(key)
+aIsResult = false
+}
+
 function numkeyToScreen(item) {
     if (operator === "") {
-    a += item.textContent
+    a += item.textContent || item.key
     }
     else if (operator != "") {
-    b += item.textContent
+    b += item.textContent || item.key
     }
 updateScreen()
 }
 
-keys.forEach((key) => {
-    key.addEventListener("click", () => {
-        if (aIsResult == true && operator == "") {
-            clearScreen()
+function enterOperator(item) {
+    if (operator !== "" && b !== "") {
+        a = operate(operator)
+        b = ""
+        if (item.textContent === "xy") {
+            operator = "^"
         }
-    numkeyToScreen(key)
-    aIsResult = false
-    })
-})
+        else 
+        operator = item.textContent || item.key
+    }
+    else if (item.textContent === "xy" && a != errorMsg) {
+        operator = "^";
+    }
+    else if (a != "" && a != errorMsg) {
+        operator = item.textContent || item.key
+    }
+updateScreen()
+}
 
-op.forEach((key) => {
-    key.addEventListener("click", () => {
-        if (operator !== "" && b !== "") {
-            a = operate(operator)
-            b = ""
-            if (key.textContent === "xy") {
-                operator = "^"
-            }
-            else 
-            operator = key.textContent
-        }
-        else if (key.textContent === "xy" && a != errorMsg) {
-            operator = "^";
-        }
-        else if (a != "" && a != errorMsg) {
-            operator = key.textContent
-        }
-        updateScreen()
-    })
-})
-
-util.forEach((key) => {
-    key.addEventListener("click", () => {
-        switch (key.textContent) {
+function enterUtil(item) {
+        switch (item.textContent || item.key) {
             case "C":
                 clearScreen()
                 break;
+            case "D":
             case "DEL":
                 if (a == errorMsg) {
                     break;
@@ -130,6 +130,10 @@ util.forEach((key) => {
                 b = b.slice(0, (b.length - 1))
                 }
                 break;
+            case "Enter":
+                if (item.shiftKey == false) {
+                    break;
+                }
             case "=":
                 if (a !== "" && operator !== "" && b !== "") {
                     a = operate(operator)
@@ -137,12 +141,44 @@ util.forEach((key) => {
                     operator = ""
                 }
                 break;
+            case "_":
+                togglePosOrNegative()
             }
         updateScreen()
-    })
+}
+
+// Input
+
+keys.forEach((key) => {
+    key.addEventListener("click", () => enterInput(key))
 })
 
-minusKey.addEventListener("click", () => {
+document.addEventListener("keydown", (event) => {
+    if (!isNaN(event.key)) {
+    enterInput(event)
+    }
+})
+
+op.forEach((key) => {
+    key.addEventListener("click", () => enterOperator(key))
+})
+
+document.addEventListener("keydown", (event) => {
+    const validOperators = "+-*/^"
+    if (validOperators.includes(event.key)) {
+    enterOperator(event)
+    }
+})
+
+util.forEach((key) => {
+    key.addEventListener("click", () => enterUtil(key))
+})
+
+document.addEventListener("keydown", (event) => {
+    enterUtil(event)
+})
+
+function togglePosOrNegative() {
     if (operator === "" && a != "" && a != errorMsg) {
     a = -a
     }
@@ -150,5 +186,6 @@ minusKey.addEventListener("click", () => {
     b = -b
     }
 updateScreen()    
-})
+}
 
+minusKey.addEventListener("click", () => togglePosOrNegative())
