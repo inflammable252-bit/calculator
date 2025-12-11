@@ -29,7 +29,12 @@ function addToLog() {
     const listItem = document.createElement("li")
     listItem.textContent = `${aPrevious}${opPrevious}${bPrevious} = ${a}`
     logList.appendChild(listItem)
+    listItems = document.querySelectorAll(".log-list li")
+    if (listItems.length > 10) {
+    logList.removeChild(listItems[0])
+    }
 }
+
 
 //Operations
 
