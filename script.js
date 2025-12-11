@@ -192,25 +192,21 @@ document.addEventListener("keydown", (event) => {
     if (!isNaN(event.key)) {
     enterInput(event)
     }
+
+    const validOperators = "+-*/^"
+    if (validOperators.includes(event.key)) {
+    enterOperator(event)
+    }
+
+    enterUtil(event)
 })
 
 op.forEach((key) => {
     key.addEventListener("click", () => enterOperator(key))
 })
 
-document.addEventListener("keydown", (event) => {
-    const validOperators = "+-*/^"
-    if (validOperators.includes(event.key)) {
-    enterOperator(event)
-    }
-})
-
 util.forEach((key) => {
     key.addEventListener("click", () => enterUtil(key))
-})
-
-document.addEventListener("keydown", (event) => {
-    enterUtil(event)
 })
 
 function togglePosOrNegative() {
