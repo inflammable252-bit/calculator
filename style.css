@@ -57,8 +57,9 @@ div.screen {
     padding: 15px 10px 0px;
     border-radius: 4px;
     border: 2px, solid, darkslateblue;
-    background-color: slateblue;
+    background-color: rgb(106, 90, 205);
     font-size: 22px;
+    color: rgb(42, 23, 82);
     
 }
 

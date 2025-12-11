@@ -4,6 +4,35 @@ let operator = ""
 let aIsResult = false
 let errorMsg = "💥💥💥" + "ERROR" + "💥💥💥"
 
+let displayText = document.querySelector("p.display")
+let screenToDisplay = displayText.textContent
+
+let keys = document.querySelectorAll(".numkey")
+let util = document.querySelectorAll("#util")
+let op = document.querySelectorAll("#op")
+let minusKey = document.querySelector("#negative")
+
+let screen = document.querySelector("div.screen")
+let solarPanel = document.querySelector("div#solar-panel")
+
+solarPanel.addEventListener("mouseenter", () => {
+    displayText.style.opacity = 0.35
+})
+solarPanel.addEventListener("mouseout", () => {
+    displayText.style.opacity = 1
+})
+
+//Log
+const logList = document.querySelector(".log-list")
+
+function addToLog() {
+    const listItem = document.createElement("li")
+    listItem.textContent = `${aPrevious}${opPrevious}${bPrevious} = ${a}`
+    logList.appendChild(listItem)
+}
+
+//Operations
+
 const add = function (a, b) {
     return parseFloat(a) + parseFloat(b)
 };
@@ -28,34 +57,30 @@ const power = function (a, b) {
 
 function operate(operator) {
     aIsResult = true
+    aPrevious = a
+    bPrevious = b
+    opPrevious = operator
     switch (operator) {
         case "+":
             return (add(a,b))
         case "-":
             return subtract(a,b)
+        case "*":
         case "x":
             return multiply(a,b)
         case "÷":
-            return divide(a,b)
         case "/":
             return divide(a,b)
         case "^":
            return power(a,b)
     }
 }
-let display = document.querySelector("p.display")
-let screenToDisplay = display.textContent
-
-let keys = document.querySelectorAll(".numkey")
-let util = document.querySelectorAll("#util")
-let op = document.querySelectorAll("#op")
-let minusKey = document.querySelector("#negative")
 
 //Input helpers
 
 function updateScreen() {
     screenToDisplay = `${a}${operator}${b}`
-    display.textContent = screenToDisplay
+    displayText.textContent = screenToDisplay
 }
 
 function truncate() {
@@ -91,6 +116,7 @@ function enterOperator(item) {
     if (operator !== "" && b !== "") {
         a = operate(operator)
         b = ""
+        addToLog()
         if (item.textContent === "xy") {
             operator = "^"
         }
@@ -139,6 +165,7 @@ function enterUtil(item) {
                     a = operate(operator)
                     b = ""
                     operator = ""
+                    addToLog()
                 }
                 break;
             case "_":
@@ -148,6 +175,9 @@ function enterUtil(item) {
 }
 
 // Input
+
+let aPrevious = ""
+let bPrevious = ""
 
 keys.forEach((key) => {
     key.addEventListener("click", () => enterInput(key))
