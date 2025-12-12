@@ -35,6 +35,15 @@ function addToLog() {
     }
 }
 
+const clearLogButton = document.querySelector("button#clear-log")
+
+clearLogButton.addEventListener("click", () => {
+    let itemsToDelete = document.querySelectorAll(".log-list > li")
+    itemsToDelete.forEach((item) => {
+        logList.removeChild(item)
+        console.log(item)
+    })
+})
 
 //Operations
 
