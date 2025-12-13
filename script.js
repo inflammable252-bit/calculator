@@ -42,7 +42,6 @@ clearLogButton.addEventListener("click", () => {
     let itemsToDelete = document.querySelectorAll(".log-list > li")
     itemsToDelete.forEach((item) => {
         logList.removeChild(item)
-        console.log(item)
     })
 })
 
@@ -141,6 +140,7 @@ function decimalToScreen() {
     b += "."
     }
 updateScreen()
+aIsResult = false;
 }
 
 function enterOperator(item) {
