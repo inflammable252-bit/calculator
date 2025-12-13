@@ -31,7 +31,7 @@ function addToLog() {
     listItem.textContent = `${aPrevious}${opPrevious}${bPrevious} = ${a}`
     logList.appendChild(listItem)
     listItems = document.querySelectorAll(".log-list li")
-    if (listItems.length > 10) {
+    if (listItems.length > 15) {
     logList.removeChild(listItems[0])
     }
 }
