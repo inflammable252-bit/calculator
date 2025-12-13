@@ -8,6 +8,7 @@ let displayText = document.querySelector("p.display")
 let screenToDisplay = displayText.textContent
 
 let keys = document.querySelectorAll(".numkey")
+let decimalKey = document.querySelector(".float")
 let util = document.querySelectorAll("#util")
 let op = document.querySelectorAll("#op")
 let minusKey = document.querySelector("#negative")
@@ -35,6 +36,15 @@ function addToLog() {
     }
 }
 
+const clearLogButton = document.querySelector("button#clear-log")
+
+clearLogButton.addEventListener("click", () => {
+    let itemsToDelete = document.querySelectorAll(".log-list > li")
+    itemsToDelete.forEach((item) => {
+        logList.removeChild(item)
+        console.log(item)
+    })
+})
 
 //Operations
 
@@ -117,6 +127,22 @@ function numkeyToScreen(item) {
 updateScreen()
 }
 
+function decimalToScreen() {
+    if (operator === "" && !a.toString().includes(".")) {
+        if (a == "" || aIsResult == true) {
+        a = "0"
+        }
+    a += "."
+    }
+    else if (operator != "" && !b.toString().includes(".")) {
+        if (b == "") {
+            b = "0"
+        }
+    b += "."
+    }
+updateScreen()
+}
+
 function enterOperator(item) {
     if (operator !== "" && b !== "") {
         a = operate(operator)
@@ -188,21 +214,26 @@ keys.forEach((key) => {
     key.addEventListener("click", () => enterInput(key))
 })
 
-document.addEventListener("keydown", (event) => {
-    if (!isNaN(event.key)) {
-    enterInput(event)
-    }
-
-    const validOperators = "+-*/^"
-    if (validOperators.includes(event.key)) {
-    enterOperator(event)
-    }
-
-    enterUtil(event)
+decimalKey.addEventListener("click", () => {
+    decimalToScreen()
 })
 
 op.forEach((key) => {
     key.addEventListener("click", () => enterOperator(key))
+})
+
+document.addEventListener("keydown", (event) => {
+    const validOperators = "+-*/^"
+    if (validOperators.includes(event.key)) {
+        enterOperator(event)
+        }
+    if (event.key == ".") {
+        decimalToScreen()
+    }
+    if (!isNaN(event.key)) {
+    enterInput(event)
+        }
+    enterUtil(event)
 })
 
 util.forEach((key) => {
