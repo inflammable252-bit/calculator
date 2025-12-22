@@ -4,6 +4,8 @@ let operator = ""
 let aIsResult = false
 let errorMsg = "💥💥💥" + "ERROR" + "💥💥💥"
 
+let aTruncated = ""
+
 let displayText = document.querySelector("p.display")
 let screenToDisplay = displayText.textContent
 
@@ -48,8 +50,8 @@ clearLogButton.addEventListener("click", () => {
 //Operations
 
 const add = function (a, b) {
-    return parseFloat(a) + parseFloat(b)
-};
+    return a + b;
+}
 const subtract = function (a, b) {
     return a - b;
 }
@@ -74,6 +76,8 @@ function operate(operator) {
     aPrevious = a
     bPrevious = b
     opPrevious = operator
+    a = parseFloat(a)
+    b = parseFloat(b)
     switch (operator) {
         case "+":
             return (add(a,b))
@@ -91,17 +95,17 @@ function operate(operator) {
 }
 
 //Input helpers
-
 function updateScreen() {
     screenToDisplay = `${a}${operator}${b}`
+    truncate()
     displayText.textContent = screenToDisplay
 }
 
 function truncate() {
-    if (a.toString().length > 3) {
-        parseFloat(a).toPrecision(3)
+    if (a.toString().length > 8) {
+        aTruncated = parseFloat(a).toPrecision(8)
+        screenToDisplay = `${aTruncated}${operator}${b}`
     }
-
 }
 
 function clearScreen() {
@@ -192,6 +196,7 @@ function enterUtil(item) {
                 break;
             case "Enter":
                 if (item.shiftKey == false) {
+                    event.preventDefault()
                     break;
                 }
             case "=":
@@ -201,6 +206,7 @@ function enterUtil(item) {
                     operator = ""
                     addToLog()
                 }
+                event.preventDefault()
                 break;
             case "_":
                 togglePosOrNegative()

@@ -133,5 +133,6 @@ div.log-top {
     height: 37px;
     font-size: 18px;
     background-color:lightpink;
+    border-color: rgb(230, 172, 181);
     align-self: center;
 }
