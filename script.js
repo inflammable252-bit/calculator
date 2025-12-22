@@ -99,7 +99,7 @@ function updateScreen() {
 
 function truncate() {
     if (a.toString().length > 3) {
-        a.toFixed(3)
+        parseFloat(a).toPrecision(3)
     }
 
 }

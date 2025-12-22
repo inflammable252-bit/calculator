@@ -61,7 +61,8 @@ div.screen {
     background-color: rgb(106, 90, 205);
     font-size: 22px;
     color: rgb(42, 23, 82);
-    
+    overflow: scroll;
+    scrollbar-width: none;
 }
 
 p.display {
