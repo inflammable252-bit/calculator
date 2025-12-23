@@ -98,6 +98,10 @@ function operate(operator) {
 function updateScreen() {
     screenToDisplay = `${a}${operator}${b}`
     truncate()
+    if (screenToDisplay == "NaN") {
+        displayText.textContent = errorMsg;
+        return
+    }
     displayText.textContent = screenToDisplay
 }
 
@@ -116,7 +120,7 @@ function clearScreen() {
 }
 
 function enterInput(key) {
-    if (aIsResult == true && operator == "") {
+    if (aIsResult == true && operator == "" || screenToDisplay == errorMsg) {
         clearScreen()
     }
 numkeyToScreen(key)
