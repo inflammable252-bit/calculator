@@ -106,8 +106,8 @@ function updateScreen() {
 }
 
 function truncate() {
-    if (a.toString().length > 8) {
-        aTruncated = parseFloat(a).toPrecision(8)
+    if (a.toString().length > 10) {
+        aTruncated = parseFloat(a).toPrecision(10)
         screenToDisplay = `${aTruncated}${operator}${b}`
     }
 }
